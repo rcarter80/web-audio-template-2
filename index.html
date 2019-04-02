@@ -16,7 +16,6 @@
   <h2>Click the buttons to make (or stop) some sound:</h2>
   <button id="playButton" class="btn-transport" type="button">play</button>
   <button id="stopButton" class="btn-transport" type="button">stop</button>
-  <button id="transportButton" class="btn-transport" type="button">start or stop transport</button>
   <fieldset>
     <legend>Use slider to control pitch shift</legend>
     <label id="pitchShiftLabel" for="pitchShiftSlider">0</label>
@@ -61,35 +60,20 @@ pitchShiftSlider.addEventListener('input', function() {
   pitchShiftLabel.innerHTML = pitchShiftSlider.value;
 });
 
-//create a loop
-var loop = new Tone.Loop(function(time) {
-	synth.triggerAttackRelease("C1", "8n", time);
-}, "8n");
-
-// The following block of code will run when the transport button is clicked
-document.querySelector('#transportButton').onclick = function() {
-  console.log('The transport button has been clicked.');
-
-  // Start the audio context
-  Tone.context.resume();
-  // Start/stop the transport
-  Tone.Transport.toggle();
-};
-
 // The following block of code will run when the play button is clicked
 document.querySelector('#playButton').onclick = function() {
   console.log('The play button has been clicked.');
 
-  // start Loop
-  loop.start();
+  // Play a middle C, which will sound until the stop button is clicked
+  synth.triggerAttack('C4');
 };
 
 // The following block of code will run when the stop button is clicked
 document.querySelector('#stopButton').onclick = function() {
   console.log('The stop button has been clicked.');
 
-  // Stop Loop
-  loop.stop();
+  // Stop the note from sounding
+  synth.triggerRelease();
 };
 
 </script>
